@@ -79,8 +79,12 @@ lower(relname)='$table' ");
 
 
             $res3 = pg_query("SELECT * FROM \"$table\"");
-            while ($r = pg_fetch_row($res3)) {
-                $sql = "INSERT INTO $table VALUES ('";
+            $rows = pg_num_rows($res3);
+            for($i=0;$i<$rows;$i++){
+                $r = pg_fetch_array($res3, $i, PGSQL_ASSOC);
+                $sql = "INSERT INTO $table ";
+                $sql .= " (\"" . implode("\",\"", array_keys($r)) . "\") ";
+                $sql .= " VALUES ('";
                 $sql .= implode("','", $r);
                 $sql .= "');";
                 $str = str_replace("''", "NULL", $str);
