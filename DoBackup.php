@@ -7,8 +7,9 @@
 namespace vitalik74\backup;
 
 use Yii;
+use yii\base\Component;
 
-class DoBackup
+class DoBackup extends Component
 {
 
     /**
@@ -35,16 +36,6 @@ class DoBackup
      * @var string Password of database user
      */
     private $password;
-
-    public function __construct($backpupPath, $dbPort = 5432)
-    {
-        $this->backpupPath = $backpupPath;
-        $this->dbPort = $dbPort;
-        $this->dbName = explode('=', explode(';', Yii::$app->db->dsn)[1])[1];
-        $this->username = Yii::$app->db->username;
-        $this->password = Yii::$app->db->password;
-        return true;
-    }
 
     /**
      * Create database backup file and save it
