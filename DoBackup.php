@@ -81,7 +81,7 @@ lower(relname)='$table' ");
             $res3 = pg_query("SELECT * FROM \"$table\"");
             while ($r = pg_fetch_row($res3)) {
                 $sql = "INSERT INTO $table VALUES ('";
-                $sql .= utf8_decode(implode("','", $r));
+                $sql .= implode("','", $r);
                 $sql .= "');";
                 $str = str_replace("''", "NULL", $str);
                 $str .= $sql;
@@ -124,7 +124,7 @@ clf.relkind = 'r')
    af.attnum = ct.confkey[1]) order by cl.relname ");
         while ($row = pg_fetch_row($res)) {
             $str .= "\n\n--\n";
-            $str .= "-- Creating relacionships for '" . $row[0] . "'";
+            $str .= "-- Creating relationships for '" . $row[0] . "'";
             $str .= "\n--\n\n";
             $str .= "ALTER TABLE ONLY " . $row[0] . " ADD CONSTRAINT " . $row[1] .
                 " " . $row[2] . ";";
