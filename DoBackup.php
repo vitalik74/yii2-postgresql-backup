@@ -15,41 +15,24 @@ class DoBackup extends Component
     /**
      * @var string Full path to your db backup file, \var\www\backup\db.sql
      */
-    public $backpupPath;
-
-    /**
-     * @var integer Port of db connection
-     */
-    private $dbPort;
-
-    /**
-     * @var string Name of database
-     */
-    private $dbName;
-
-    /**
-     * @var string Name of database user
-     */
-    private $username;
-
-    /**
-     * @var string Password of database user
-     */
-    private $password;
+    public $backupPath;
 
     /**
      * Create database backup file and save it
      */
-    public function create()
+    public function create($fileName)
     {
         try {
-            $dbconn = pg_pconnect("host=localhost port=$this->dbPort dbname=$this->dbName 
-user=$this->username password=$this->password"); //connectionstring
+            $db = Yii::$app->db;
+            parse_str(explode(':', str_replace(';', '&', $db->dsn))[1], $parse);
+            $port = isset($parse['port']) ? 'port=' . $parse['port'] : '';
+            $dbconn = pg_pconnect("host=$parse[host] $port dbname=$parse[dbname]
+user=$db->username password=$db->password"); //connectionstring
         } catch (\Exception $exc) {
             echo "Can't connect to database.";
             exit();
         }
-        $back = fopen($this->backpupPath, "w");
+        $back = fopen($this->backupPath . '/' . $fileName, "w");
         $res = pg_query(" select relname as tablename
                     from pg_class where relkind in ('r')
                     and relname not like 'pg_%' and relname not like 
@@ -95,7 +78,7 @@ lower(relname)='$table' ");
             $str .= "\n--\n\n";
 
 
-            $res3 = pg_query("SELECT * FROM $table");
+            $res3 = pg_query("SELECT * FROM \"$table\"");
             while ($r = pg_fetch_row($res3)) {
                 $sql = "INSERT INTO $table VALUES ('";
                 $sql .= utf8_decode(implode("','", $r));
@@ -148,7 +131,8 @@ clf.relkind = 'r')
         }
         fwrite($back, $str);
         fclose($back);
-        return $back;
+
+        return $this->backupPath . '/' . $fileName;
     }
 
 }
