@@ -1,0 +1,45 @@
+{
+  "name": "vitalik74/yii2-postgresql-backup",
+  "description": "This is Yii2 extension for backup Postgres database",
+  "version": "1.0.0",
+  "type": "yii2-extension",
+  "keywords": [
+    "yii2",
+    "yii 2",
+    "backup",
+    "backup database"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tsibikov Vitaliy",
+      "email": "tsibikov_vit@mail.ru",
+      "homepage": "http://tsibikov.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Vitaliy Koziy",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/vitalik74/yii2-postgresql-backup/issues?state=open",
+    "source": "https://github.com/vitalik74/yii2-postgresql-backup",
+    "email": "tsibikov_vit@mail.ru"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "vitalik74\\backup\\": "src"
+    }
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  }
+}

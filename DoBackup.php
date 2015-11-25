@@ -4,7 +4,7 @@
  * Use this class for create database backup of Postgresql database
  * @author Vitaliy Koziy
  */
-namespace your\namespace;
+namespace vitalik74\backup;
 
 use Yii;
 
@@ -44,32 +44,6 @@ class DoBackup
         $this->username = Yii::$app->db->username;
         $this->password = Yii::$app->db->password;
         return true;
-    }
-
-    /**
-     * downlopad backup file
-     */
-    private static function dlFile()
-    {
-        if (!is_file($this->backpupPath)) {
-            die("<b>404 File not found!</b>");
-        }
-        $len = filesize($this->backpupPath);
-        $filename = basename($this->backpupPath);
-        $file_extension = strtolower(substr(strrchr($filename, "."), 1));
-        $ctype = "application/force-download";
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: public");
-        header("Content-Description: File Transfer");
-        header("Content-Type: $ctype");
-        $header = "Content-Disposition: attachment; filename=" . $filename . ";";
-        header($header);
-        header("Content-Transfer-Encoding: binary");
-        header("Content-Length: " . $len);
-        @readfile($this->backpupPath);
-        exit;
     }
 
     /**
