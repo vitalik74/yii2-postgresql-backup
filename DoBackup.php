@@ -109,7 +109,7 @@ lower(relname)='$table' ");
                 // Next Line Can be improved!!!
                 $t = str_replace("ON", "|", $t);
                 $Temparray = explode("|", $t);
-                $str .= "ALTER TABLE ONLY \"" . $Temparray[1] . "\" ADD CONSTRAINT " .
+                $str .= "ALTER TABLE ONLY '" . $Temparray[1] . "' ADD CONSTRAINT " .
                     $Temparray[0] . " PRIMARY KEY " . $Temparray[2] . ";\n";
             }
         }
@@ -130,7 +130,7 @@ clf.relkind = 'r')
             $str .= "\n\n--\n";
             $str .= "-- Creating relationships for '" . $row[0] . "'";
             $str .= "\n--\n\n";
-            $str .= "ALTER TABLE ONLY \"" . $row[0] . "\" ADD CONSTRAINT " . $row[1] .
+            $str .= "ALTER TABLE ONLY '" . $row[0] . "' ADD CONSTRAINT " . $row[1] .
                 " " . $row[2] . ";";
         }
         fwrite($back, $str);
