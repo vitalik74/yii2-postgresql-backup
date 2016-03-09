@@ -43,8 +43,8 @@ user=$db->username password=$db->password"); //connectionstring
             $str .= "\n--\n";
             $str .= "-- Estrutura da tabela '$table'";
             $str .= "\n--\n";
-            $str .= "\nDROP TABLE $table CASCADE;";
-            $str .= "\nCREATE TABLE $table (";
+            $str .= "\nDROP TABLE \"$table\" CASCADE;";
+            $str .= "\nCREATE TABLE \"$table\" (";
             $res2 = pg_query("
     SELECT  attnum,attname , typname , atttypmod-4 , attnotnull 
 ,atthasdef ,adsrc AS def
@@ -82,7 +82,7 @@ lower(relname)='$table' ");
             $rows = pg_num_rows($res3);
             for($i=0;$i<$rows;$i++){
                 $r = pg_fetch_array($res3, $i, PGSQL_ASSOC);
-                $sql = "INSERT INTO $table ";
+                $sql = "INSERT INTO \"$table\" ";
                 $sql .= " (\"" . implode("\",\"", array_keys($r)) . "\") ";
                 $sql .= " VALUES ('";
                 $sql .= implode("','", $r);
